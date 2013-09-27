@@ -3,6 +3,8 @@ var tracer = require('tracer').colorConsole({
 	level: 'debug'
 });
 
+var Player = require('./lib/player');
+
 io.set('logger', {
 	debug: tracer.debug,
 	info: tracer.info,
@@ -10,8 +12,18 @@ io.set('logger', {
 	error: tracer.error
 });
 
+io.set('authorization', function(data, accept) {
+	if (typeof data.query.username === 'undefined') {
+		return accept('Must define a username in order to connect.', false);
+	}
+	return accept(null, true);	
+});
+
 io.sockets.on('connection', function(socket) {
-	socket.emit('handshake', {});
+	var player = new Player(socket.handshake.query.username);
+	socket.emit('handshake', {
+		'message': 'Welcome ' + player.name() + ', prepare to be attacked!'
+	});
 	setInterval(function() {
 		socket.emit('test_event', {
 			'test': Math.floor(Math.random() * 10001)
