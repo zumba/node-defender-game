@@ -1,9 +1,14 @@
+// Modules
 var io = require('socket.io').listen(1337);
 var tracer = require('tracer').colorConsole({
 	level: 'debug'
 });
 
+// Libraries
 var Player = require('./lib/player');
+
+// Local
+var defender;
 
 io.set('logger', {
 	debug: tracer.debug,
@@ -19,14 +24,16 @@ io.set('authorization', function(data, accept) {
 	return accept(null, true);	
 });
 
-io.sockets.on('connection', function(socket) {
-	var player = new Player(socket.handshake.query.username);
-	socket.emit('handshake', {
-		'message': 'Welcome ' + player.name() + ', prepare to be attacked!'
-	});
-	setInterval(function() {
-		socket.emit('test_event', {
-			'test': Math.floor(Math.random() * 10001)
+defender = io
+	.of('/defender')
+	.on('connection', function(socket) {
+		var player = new Player(socket.handshake.query.username);
+		socket.emit('handshake', {
+			'message': 'Welcome ' + player.name() + ', prepare to be attacked!'
 		});
-	}, 3000);
-});
+		setInterval(function() {
+			socket.emit('test_event', {
+				'test': Math.floor(Math.random() * 10001)
+			});
+		}, 3000);
+	});
