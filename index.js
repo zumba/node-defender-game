@@ -1,7 +1,7 @@
 // Modules
-var io = require('socket.io').listen(1337);
+var io = require('socket.io').listen(process.env.PORT || 1337);
 var tracer = require('tracer').colorConsole({
-	level: 'debug'
+	level: process.env.LOGLEVEL || 'debug'
 });
 
 // Libraries
