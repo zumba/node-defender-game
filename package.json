@@ -1,30 +1,35 @@
 {
-	"name": "booth-node-defender-server",
-	"version": "0.0.1",
-	"author": "Zumba Fitness <engineering@zumba.com>",
-	"description": "Protect your node client for as long as possible. Defend against waves of murderous server side code that wants nothing more than to kill and disconnect your node client.",
-	"contributors": [
-		{
-			"name": "Chris Saylor",
-			"email": "chris.saylor@zumba.com"
-		}
-	],
-	"main": "index.js",
-	"scripts": {
-		"start": "node ./index.js"
-	},
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/zumba/booth-node-defender-server.git"
-	},
-	"private": true,
-	"dependencies": {
-		"socket.io": "0.9.x",
-		"underscore": "1.5.x",
-		"tracer": "0.5.x"
-	},
-	"engine": {
-		"node": ">=0.10.4"
-	},
-	"license": "MIT"
+  "name": "booth-node-defender-server",
+  "version": "0.0.1",
+  "author": "Zumba Fitness <engineering@zumba.com>",
+  "description": "Protect your node client for as long as possible. Defend against waves of murderous server side code that wants nothing more than to kill and disconnect your node client.",
+  "contributors": [
+    {
+      "name": "Chris Saylor",
+      "email": "chris.saylor@zumba.com"
+    }
+  ],
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./index.js",
+    "preinstall": "npm i -g jasmine-node"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zumba/booth-node-defender-server.git"
+  },
+  "private": true,
+  "dependencies": {
+    "socket.io": "0.9.x",
+    "underscore": "1.5.x",
+    "tracer": "0.5.x"
+  },
+  "engine": {
+    "node": ">=0.10.4"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-contrib-jshint": "~0.6.4"
+  }
 }
