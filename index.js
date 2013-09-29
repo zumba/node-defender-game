@@ -59,10 +59,11 @@ defender = io
 
 		// Recieve action commands from the player
 		socket.on('action', function(data) {
-			var dmg = game.getEnemyAttackDamage();
-			player.damage(dmg);
+			var dmg;
 
 			game.setupRound();
+			dmg = game.getEnemyAttackDamage();
+			player.damage(dmg);
 
 			// Add a delay to not make the game instant
 			setTimeout(function() {
