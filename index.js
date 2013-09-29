@@ -6,6 +6,7 @@ var tracer = require('tracer').colorConsole({
 
 // Libraries
 var Player = require('./lib/player');
+var Game = require('./lib/game');
 
 // Local
 var defender;
@@ -28,7 +29,7 @@ defender = io
 	.of('/defender')
 	.on('connection', function(socket) {
 		var player = new Player(socket.handshake.query.username),
-			round = 1;
+			game = new Game();
 
 		// Handle the player's demise
 		player.on('death', function(player) {
@@ -45,24 +46,24 @@ defender = io
 			'message': 'Welcome ' + player.name() + ', prepare to be attacked!'
 		});
 
+		// Recieve action commands from the player
 		socket.on('action', function(data) {
-			// Recieve action commands from the player
-			// Should emit an event on the game "brain" class.
-			// The game brain should determine how much damage etc per mob per round.
-			var dmg = Math.ceil(Math.random() * 10);
-			round++;
+			var dmg = game.getEnemyAttackDamage();
 			player.damage(dmg);
+
+			game.setupRound();
 
 			// Add a delay to not make the game instant
 			setTimeout(function() {
 				socket.emit('round', {
 					player: player.info(),
-					round: round,
+					round: game.getRound(),
 					damage: {
 						taken: dmg,
 						inflicted: 0
 					},
-					mobs: []
+					summary: game.summary(),
+					mobs: game.getEnemies()
 				})
 			}, 1000);
 		});
@@ -70,11 +71,12 @@ defender = io
 		// Initial round
 		socket.emit('round', {
 			player: player.info(),
-			round: round,
+			round: game.getRound(),
 			damage: {
 				taken: 0,
 				inflicted: 0
 			},
-			mobs: []
+			summary: game.summary(),
+			mobs: game.getEnemies()
 		});
 	});
