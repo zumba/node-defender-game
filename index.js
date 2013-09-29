@@ -18,15 +18,15 @@ io.set('logger', {
 	error: tracer.error
 });
 
-io.set('authorization', function(data, accept) {
-	if (typeof data.query.username === 'undefined') {
-		return accept('Must define a username in order to connect.', false);
-	}
-	return accept(null, true);	
-});
 
 defender = io
 	.of('/defender')
+	.authorization(function(handshake, callback) {
+		if (typeof handshake.query.username === 'undefined') {
+			return callback('Must define a username in order to connect.', false);
+		}
+		return callback(null, true);	
+	})
 	.on('connection', function(socket) {
 		var player = new Player(socket.handshake.query.username),
 			game = new Game();
