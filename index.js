@@ -9,7 +9,7 @@ var Player = require('./lib/player');
 var Game = require('./lib/game');
 
 // Local
-var defender;
+var defender, stats;
 
 io.set('logger', {
 	debug: tracer.debug,
@@ -18,7 +18,10 @@ io.set('logger', {
 	error: tracer.error
 });
 
+// Stat channel (for scoreboard)
+stats = io.of('/stats');
 
+// Node defender main channel
 defender = io
 	.of('/defender')
 	.authorization(function(handshake, callback) {
@@ -33,12 +36,20 @@ defender = io
 
 		// Handle the player's demise
 		player.on('death', function(player) {
+			// Notify client of final player stats
 			defender.emit('death', {
 				'message': player.name() + ' is not in my base, killing my dudes anymore.',
 				'stats': player.info()
 			});
+
+			// Kick the client
 			socket.emit('disconnect', {});
-			
+
+			// Record player stats to DB
+			game.recordGame(function (game) {
+				// Read top 10 games and emit to stats channel
+				stats.emit('top10', {});
+			});
 		});
 
 		// Welcome message
