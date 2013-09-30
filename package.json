@@ -7,6 +7,10 @@
     {
       "name": "Chris Saylor",
       "email": "chris.saylor@zumba.com"
+    },
+    {
+      "name": "Stephen Young",
+      "email": "stephen.young@zumba.com"
     }
   ],
   "main": "index.js",
