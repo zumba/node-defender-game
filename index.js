@@ -59,11 +59,15 @@ defender = io
 
 		// Recieve action commands from the player
 		socket.on('action', function(data) {
-			var dmg;
+			var playerDamage, enemyDamage;
+
+			// Process player action first, then mob action and spawning
+			playerDamage = game.attackEnemy(data.target, data.weapon);
+
+			enemyDamage = game.getEnemyAttackDamage();
+			player.damage(enemyDamage);
 
 			game.setupRound();
-			dmg = game.getEnemyAttackDamage();
-			player.damage(dmg);
 
 			// Add a delay to not make the game instant
 			setTimeout(function() {
@@ -71,16 +75,17 @@ defender = io
 					player: player.info(),
 					round: game.getRound(),
 					damage: {
-						taken: dmg,
-						inflicted: 0
+						taken: enemyDamage,
+						inflicted: playerDamage
 					},
 					summary: game.summary(),
 					mobs: game.getEnemies()
 				})
-			}, 1000);
+			}, process.env.DELAY || 1000);
 		});
 
 		// Initial round
+		game.spawnEnemies();
 		socket.emit('round', {
 			player: player.info(),
 			round: game.getRound(),
