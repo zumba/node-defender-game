@@ -2,7 +2,7 @@
 describe('Enemy', function(){
 	var Enemy = require('../../lib/enemy.js');
 	it('can describe itsself', function(){
-		var enemy = new Enemy('melee');
-		expect(enemy.describe().type).toBe('melee');
+		var enemy = new Enemy('grunt');
+		expect(enemy.describe().type).toBe('grunt');
 	});
 });
