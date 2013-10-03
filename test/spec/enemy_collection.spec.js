@@ -85,4 +85,20 @@ describe('Enemy Collection', function(){
 		collection.remove(id);
 		expect(executed).toBe(true);
 	});
+
+	it('can return a random enemy', function(){
+		var collection = new EnemyCollection(1),
+			grunt = new Enemy('grunt');
+
+		collection.add(grunt);
+		expect(collection.getRandom()).toBe(grunt);
+	});
+
+	it('can return an enemy position', function(){
+		var collection = new EnemyCollection(1),
+			grunt = new Enemy('grunt');
+
+		collection.add(grunt);
+		expect(collection.getPosition(grunt._id)).toEqual(jasmine.any(Number));
+	});
 });

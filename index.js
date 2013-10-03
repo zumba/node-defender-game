@@ -39,7 +39,7 @@ defender = io
 		if (typeof handshake.query.username === 'undefined') {
 			return callback('Must define a username in order to connect.', false);
 		}
-		return callback(null, true);	
+		return callback(null, true);
 	})
 	.on('connection', function(socket) {
 		var player = new Player(socket.handshake.query.username),
@@ -86,10 +86,13 @@ defender = io
 
 		// Recieve action commands from the player
 		socket.on('action', function(data) {
-			var playerDamage, enemyDamage;
+			var playerDamage, enemyDamage, enemy;
 
 			// Process player action first, then mob action and spawning
-			playerDamage = game.attackEnemy(data.target, data.weapon);
+			enemy = game.getEnemyById(data.target);
+			if (enemy){
+				playerDamage = player.attackEnemy(enemy.enemy, enemy.collection);
+			}
 
 			enemyDamage = game.getEnemyAttackDamage();
 			player.damage(enemyDamage);

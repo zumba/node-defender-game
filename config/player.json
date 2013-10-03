@@ -1,3 +1,4 @@
 {
-	"baseHP" : 100
+	"baseHP" : 100,
+	"defaultAttackMode" : "power"
 }
