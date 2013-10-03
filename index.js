@@ -61,9 +61,21 @@ defender = io
 				if (err) {
 					tracer.error(err);
 					tracer.warn('Player stats not saved.');
+					return;
 				}
+
 				// Read top 10 games and emit to stats channel
-				stats.emit('top10', {});
+				Game.topScoreList(db, function(err, results) {
+					if (err) {
+						tracer.error(err);
+						tracer.warn('top10 not transmitted.');
+						return;
+					}
+					tracer.info({
+						top10: results
+					});
+					stats.emit('top10', results);
+				});
 			});
 		});
 
