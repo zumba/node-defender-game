@@ -2,6 +2,7 @@
 describe('Enemy Collection', function(){
 	var EnemyCollection = require('../../lib/enemy_collection.js');
 	var Enemy = require('../../lib/enemy.js');
+	var Player = require('../../lib/player.js');
 
 	it('can add enemies', function(){
 		var collection = new EnemyCollection(1);
@@ -100,5 +101,22 @@ describe('Enemy Collection', function(){
 
 		collection.add(grunt);
 		expect(collection.getPosition(grunt._id)).toEqual(jasmine.any(Number));
+	});
+
+	it('can instruct all of the enemies contained to take an action', function(){
+		var collection = new EnemyCollection(1),
+			grunt1 = new Enemy('grunt'),
+			grunt2 = new Enemy('grunt'),
+			player = new Player('Robert Paulson'),
+			actions;
+
+		collection.add(grunt1);
+		collection.add(grunt2);
+
+		actions = collection.massAction(player);
+
+		expect(actions).toEqual(jasmine.any(Array));
+		expect(actions[0]).toEqual(jasmine.any(Object));
+		expect(actions[0].type).toEqual('move');
 	});
 });

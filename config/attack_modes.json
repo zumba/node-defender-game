@@ -1,7 +1,7 @@
 {
 	"PowerAttack" : {
 		"damage" : [7, 10],
-		"defenseMod" : 0.85,
+		"defenseMod" : 1.15,
 		"falloff" : 0.5,
 		"range" : 2,
 		"rate" : 1
@@ -22,14 +22,14 @@
 	},
 	"CollateralDamage" : {
 		"damage" : [1, 2],
-		"defenseMod" : 0.75,
+		"defenseMod" : 1.25,
 		"falloff" : 1,
 		"range" : 5,
 		"rate" : 1
 	},
 	"Defensive" : {
 		"damage" : [1, 2],
-		"defenseMod" : 1.5,
+		"defenseMod" : 0.5,
 		"falloff" : 0.2,
 		"range" : 0,
 		"rate" : 1

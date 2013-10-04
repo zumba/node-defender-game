@@ -103,16 +103,15 @@ defender = io
 
 		// Recieve action commands from the player
 		socket.on('action', function(data) {
-			var playerDamage, enemyDamage, enemy;
+			var playerAttacks, enemyActions, enemy;
 
 			// Process player action first, then mob action and spawning
 			enemy = game.getEnemyById(data.target);
 			if (enemy){
-				playerDamage = player.attackEnemy(enemy.enemy, enemy.collection);
+				playerAttacks = player.attackEnemy(enemy.enemy, enemy.collection);
 			}
 
-			enemyDamage = game.getEnemyAttackDamage();
-			player.damage(enemyDamage);
+			enemyActions = game.processEnemyActions(player);
 
 			game.setupRound();
 
@@ -121,10 +120,8 @@ defender = io
 				socket.emit('round', {
 					player: player.info(),
 					round: game.getRound(),
-					damage: {
-						taken: enemyDamage,
-						inflicted: playerDamage
-					},
+					attacks : playerAttacks,
+					enemyActions : enemyActions,
 					summary: game.summary(),
 					mobs: game.getEnemies()
 				});
@@ -136,10 +133,8 @@ defender = io
 		socket.emit('round', {
 			player: player.info(),
 			round: game.getRound(),
-			damage: {
-				taken: 0,
-				inflicted: 0
-			},
+			attacks : null,
+			enemyActions : null,
 			summary: game.summary(),
 			mobs: game.getEnemies()
 		});
