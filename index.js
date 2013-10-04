@@ -1,3 +1,4 @@
+/* globals process, __dirname */
 // Modules
 var io = require('socket.io').listen(process.env.PORT || 1337);
 var app = require('express')();
@@ -34,7 +35,7 @@ emitTop10 = function() {
 		});
 		stats.emit('top10', results);
 	});
-}
+};
 
 // Initiate the mongo connection
 MongoClient.connect('mongodb://' + (process.env.MONGOHOST || '127.0.0.1') + ':27017/node-defender', function(err, connection) {
@@ -50,7 +51,7 @@ MongoClient.connect('mongodb://' + (process.env.MONGOHOST || '127.0.0.1') + ':27
 server.listen(process.env.STATPORT || 8080);
 stats = io
 	.of('/stats')
-	.on('connection', function(socket) {
+	.on('connection', function() {
 		emitTop10();
 	});
 
@@ -84,7 +85,7 @@ defender = io
 			socket.emit('disconnect', {});
 
 			// Record player stats to DB
-			game.recordGame(db, player, function (err, game) {
+			game.recordGame(db, player, function (err) {
 				if (err) {
 					tracer.error(err);
 					tracer.warn('Player stats not saved.');
@@ -126,7 +127,7 @@ defender = io
 					},
 					summary: game.summary(),
 					mobs: game.getEnemies()
-				})
+				});
 			}, process.env.DELAY || 1000);
 		});
 
