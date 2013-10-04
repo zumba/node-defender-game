@@ -1,5 +1,7 @@
 // Modules
 var io = require('socket.io').listen(process.env.PORT || 1337);
+var app = require('express')();
+var server = require('http').createServer(app);
 var MongoClient = require('mongodb').MongoClient;
 var tracer = require('tracer').colorConsole({
 	level: process.env.LOGLEVEL || 'info'
@@ -10,7 +12,7 @@ var Player = require('./lib/player');
 var Game = require('./lib/game');
 
 // Local
-var defender, stats, db;
+var defender, db, stats, emitTop10;
 
 io.set('logger', {
 	debug: tracer.debug,
@@ -18,6 +20,21 @@ io.set('logger', {
 	warn: tracer.warn,
 	error: tracer.error
 });
+
+emitTop10 = function() {
+	// Read top 10 games and emit to stats channel
+	Game.topScoreList(db, function(err, results) {
+		if (err) {
+			tracer.error(err);
+			tracer.warn('top10 not transmitted.');
+			return;
+		}
+		tracer.info({
+			top10: results
+		});
+		stats.emit('top10', results);
+	});
+}
 
 // Initiate the mongo connection
 MongoClient.connect('mongodb://' + (process.env.MONGOHOST || '127.0.0.1') + ':27017/node-defender', function(err, connection) {
@@ -30,7 +47,17 @@ MongoClient.connect('mongodb://' + (process.env.MONGOHOST || '127.0.0.1') + ':27
 });
 
 // Stat channel (for scoreboard)
-stats = io.of('/stats');
+server.listen(process.env.STATPORT || 8080);
+stats = io
+	.of('/stats')
+	.on('connection', function(socket) {
+		emitTop10();
+	});
+
+// Web server endpoints
+app.get('/', function(req, res) {
+	res.sendfile(__dirname + '/index.html');
+});
 
 // Node defender main channel
 defender = io
@@ -64,18 +91,7 @@ defender = io
 					return;
 				}
 
-				// Read top 10 games and emit to stats channel
-				Game.topScoreList(db, function(err, results) {
-					if (err) {
-						tracer.error(err);
-						tracer.warn('top10 not transmitted.');
-						return;
-					}
-					tracer.info({
-						top10: results
-					});
-					stats.emit('top10', results);
-				});
+				emitTop10();
 			});
 		});
 
