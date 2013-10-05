@@ -1,0 +1,23 @@
+{
+	"intro" : [
+		["grunt"],
+		["swarmer", "swarmer", "swarmer"]
+	],
+	"standard" : [
+		["grunt", "grunt"],
+		["swarmer", "swarmer", "swarmer", "swarmer", "swarmer"],
+		["grunt", "swarmer", "swarmer", "swarmer"]
+	],
+	"enforcer" : [
+		["trooper", "grunt", "grunt"],
+		["speed-demon", "swarmer", "swarmer", "swarmer"],
+		["flyer", "flyer", "grunt", "grunt"],
+		["cluster", "swarmer", "swarmer", "swarmer", "swarmer"]
+	],
+	"elite" : [
+		["bruiser", "grunt", "grunt"],
+		["speed-demon", "speed-demon", "speed-demon"],
+		["cluster", "cluster", "cluster"],
+		["trooper", "trooper", "flyer", "grunt"]
+	]
+}

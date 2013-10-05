@@ -1,14 +1,44 @@
 {
 	"grunt" : {
+		"behaviors" : [ ["melee", "ranged"] ],
 		"damage" : [3, 6],
-		"health" : [2, 5],
-		"round" : 1,
-		"power" : 4
+		"health" : [11, 16],
+		"startPositions" : [2, 3, 4]
 	},
 	"swarmer" : {
+		"behaviors" : [ "ranged" ],
 		"damage" : [1, 1],
 		"health" : [1, 2],
-		"round" : 3,
-		"power" : 1
+		"startPositions" : [2, 3, 4]
+	},
+	"trooper" : {
+		"behaviors" : [ "melee", "armored" ],
+		"damage" : [5, 8],
+		"health" : [11, 16],
+		"startPositions" : [3, 4, 5]
+	},
+	"speed-demon" : {
+		"behaviors" : [ ["melee", "ranged"], "evasive" ],
+		"damage" : [2, 4],
+		"health" : [2, 4],
+		"startPositions" : [1, 2, 3, 4]
+	},
+	"flyer" : {
+		"behaviors" : [ "ranged", "ranged-boost" ],
+		"damage" : [1, 1],
+		"health" : [11, 16],
+		"startPositions" : [0, 1]
+	},
+	"cluster" : {
+		"behaviors" : [ "ranged", "diminishing" ],
+		"damage" : [5, 5],
+		"health" : [5, 10],
+		"startPositions" : [2, 3, 4]
+	},
+	"bruiser" : {
+		"behaviors" : [ "melee", "heavy" ],
+		"damage" : [10, 15],
+		"health" : [5, 5],
+		"startPositions" : [5]
 	}
 }

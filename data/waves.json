@@ -1,0 +1,12 @@
+[
+	["intro"],
+	["standard"],
+	["standard", "intro"],
+	["enforcer"],
+	["enforcer", "intro"],
+	["enforcer", "standard", "intro"],
+	["elite"],
+	["elite", "intro"],
+	["elite", "standard", "intro"],
+	["elite", "enforcer", "standard", "intro"]
+]
