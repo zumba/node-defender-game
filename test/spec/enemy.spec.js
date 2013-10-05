@@ -2,6 +2,7 @@
 describe('Enemy', function(){
 	var Enemy = require('../../lib/enemy.js');
 	var Player = require('../../lib/player.js');
+	var _ = require('underscore');
 
 	it('can describe itsself', function(){
 		var enemy = new Enemy('grunt');
@@ -37,5 +38,13 @@ describe('Enemy', function(){
 		enemy.move();
 
 		expect(enemy.getPosition()).not.toBe(position);
+	});
+
+	it('handles defining behaviors from the data template, resolving arrays', function(){
+		var enemy = new Enemy('grunt');
+
+		_.each(enemy.behaviors, function(behavior){
+			expect(typeof behavior).toBe('string');
+		});
 	});
 });
