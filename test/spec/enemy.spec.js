@@ -47,4 +47,14 @@ describe('Enemy', function(){
 			expect(typeof behavior).toBe('string');
 		});
 	});
+
+	it('can tell you if it is a behavior or not', function(){
+		var enemy = new Enemy('speed-demon');
+
+		// Speed Demons might be melee, or ranged
+		expect(typeof enemy.is('melee')).toBe('boolean');
+
+		// They are always evasive
+		expect(enemy.is('evasive')).toBe(true);
+	});
 });
