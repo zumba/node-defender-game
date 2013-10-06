@@ -1,3 +1,4 @@
 {
-	"waveInterval" : 6
+	"waveInterval" : 6,
+	"rangeDamageMod" : 0.5
 }
