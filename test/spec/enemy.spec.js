@@ -20,7 +20,7 @@ describe('Enemy', function(){
 	});
 
 	it('can perform logical actions like moving and attacking', function(){
-		var enemy = new Enemy('grunt');
+		var enemy = new Enemy('flyer');
 		var player = new Player('Robert Paulson');
 		var actions = [];
 
@@ -32,7 +32,7 @@ describe('Enemy', function(){
 	});
 
 	it('can move', function(){
-		var enemy = new Enemy('grunt');
+		var enemy = new Enemy('flyer');
 		var position = enemy.getPosition();
 
 		enemy.move();

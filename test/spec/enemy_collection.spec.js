@@ -105,13 +105,13 @@ describe('Enemy Collection', function(){
 
 	it('can instruct all of the enemies contained to take an action', function(){
 		var collection = new EnemyCollection(1),
-			grunt1 = new Enemy('grunt'),
-			grunt2 = new Enemy('grunt'),
+			enemy1 = new Enemy('flyer'),
+			enemy2 = new Enemy('flyer'),
 			player = new Player('Robert Paulson'),
 			actions;
 
-		collection.add(grunt1);
-		collection.add(grunt2);
+		collection.add(enemy1);
+		collection.add(enemy2);
 
 		actions = collection.massAction(player);
 
