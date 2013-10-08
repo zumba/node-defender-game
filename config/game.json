@@ -1,4 +1,5 @@
 {
 	"waveInterval" : 6,
-	"rangeDamageMod" : 0.5
+	"rangeDamageMod" : 0.5,
+	"rangedBoostMod" : 1.6
 }
