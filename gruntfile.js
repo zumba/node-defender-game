@@ -16,11 +16,21 @@ module.exports = function(grunt) {
 				jshintrc : "jshint.json"
 			},
 			source : 'lib/**'
+		},
+		compass: {
+			dist: {
+				options: {
+					sassDir: 'sass',
+					cssDir: 'public/css',
+					environment: 'production'
+				}
+			}
 		}
 	});
 	grunt.loadNpmTasks('grunt-contrib-jshint');
+	grunt.loadNpmTasks('grunt-contrib-compass');
 	grunt.loadTasks('tasks');
 
 	// Default task.
-	grunt.registerTask('default', ['jshint', 'jasmine-node']);
+	grunt.registerTask('default', ['jshint', 'jasmine-node', 'compass']);
 };
