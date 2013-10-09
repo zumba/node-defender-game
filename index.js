@@ -10,11 +10,13 @@ var tracer = require('tracer').colorConsole({
 });
 
 // Libraries
+var PlayerCollection = require('./lib/player_collection');
 var Player = require('./lib/player');
 var Game = require('./lib/game');
 
 // Local
 var defender, db, stats, emitTop10;
+var players = new PlayerCollection();
 
 io.set('logger', {
 	debug: tracer.debug,
@@ -22,6 +24,9 @@ io.set('logger', {
 	warn: tracer.warn,
 	error: tracer.error
 });
+
+// Web server public directory
+app.use(express.static(__dirname + '/public'));
 
 emitTop10 = function() {
 	// Read top 10 games and emit to stats channel
@@ -54,10 +59,14 @@ stats = io
 	.of('/stats')
 	.on('connection', function() {
 		emitTop10();
+		// Get the player list and transmit
+		stats.emit('playerRefresh', players.list());
 	});
 
-// Web server public directory
-app.use(express.static(__dirname + '/public'));
+// Setup player collection listener
+players.onCollectionUpdate(function(playerCollection) {
+	stats.emit('playerRefresh', playerCollection.list());
+});
 
 // Node defender main channel
 defender = io
@@ -71,6 +80,7 @@ defender = io
 	.on('connection', function(socket) {
 		var player = new Player(socket.handshake.query.username),
 			game = new Game();
+		players.add(player);
 
 		// Handle the player's demise
 		player.on('death', function(player) {
@@ -125,6 +135,10 @@ defender = io
 					mobs: game.getEnemies()
 				});
 			}, process.env.DELAY || 1000);
+		});
+
+		socket.on('disconnect', function() {
+			players.remove(player.name());
 		});
 
 		// Initial round
