@@ -1,7 +1,8 @@
 /* globals process, __dirname */
 // Modules
 var io = require('socket.io').listen(process.env.PORT || 1337);
-var app = require('express')();
+var express = require('express');
+var app = express();
 var server = require('http').createServer(app);
 var MongoClient = require('mongodb').MongoClient;
 var tracer = require('tracer').colorConsole({
@@ -55,10 +56,8 @@ stats = io
 		emitTop10();
 	});
 
-// Web server endpoints
-app.get('/', function(req, res) {
-	res.sendfile(__dirname + '/index.html');
-});
+// Web server public directory
+app.use(express.static(__dirname + '/public'));
 
 // Node defender main channel
 defender = io
