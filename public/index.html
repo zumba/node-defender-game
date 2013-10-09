@@ -8,22 +8,13 @@
 	<div id="top10">
 		<p class="loading">Loading Top 10 list...</p>
 	</div>
+	<h2>Current Players</h2>
+	<div id="playerList">
+		<p class="loading">Loading player list...</p>
+	</div>
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js"></script>
 	<script src="//localhost:1337/socket.io/socket.io.js"></script>
-	<script>
-	  var socket = io.connect('//localhost:1337/stats');
-	  socket
-		.on('top10', function (data) {
-			var $toplist;
-			$toplist = $('<ol/>');
-			_.each(data, function(entry) {
-				$toplist.append('<li>' + entry.username + ': ' + entry.round + '</li>');
-			});
-			$('#top10')
-				.html('')
-				.append($toplist);
-		});
-	</script>
+	<script src="/js/scoreboard.js"></script>
 </body>
 	
