@@ -1,6 +1,6 @@
 /* globals process, __dirname */
 // Modules
-var io = require('socket.io').listen(process.env.PORT || 1337);
+var io = require('socket.io').listen(parseInt(process.env.PORT) || 1337);
 var express = require('express');
 var app = express();
 var server = require('http').createServer(app);
@@ -54,7 +54,7 @@ MongoClient.connect('mongodb://' + (process.env.MONGOHOST || '127.0.0.1') + ':27
 });
 
 // Stat channel (for scoreboard)
-server.listen(process.env.STATPORT || 8080);
+server.listen(parseInt(process.env.STATPORT) || 8080);
 stats = io
 	.of('/stats')
 	.on('connection', function() {
