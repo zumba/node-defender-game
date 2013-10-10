@@ -1,10 +1,9 @@
 /* globals process, __dirname */
 // Modules
-var io = require('socket.io').listen(parseInt(process.env.PORT) || 1337);
 var express = require('express');
 var app = express();
 var server = require('http').createServer(app);
-var MongoClient = require('mongodb').MongoClient;
+var io = require('socket.io').listen(server);
 var tracer = require('tracer').colorConsole({
 	level: process.env.LOGLEVEL || 'info'
 });
@@ -13,6 +12,7 @@ var tracer = require('tracer').colorConsole({
 var PlayerCollection = require('./lib/player_collection');
 var Player = require('./lib/player');
 var Game = require('./lib/game');
+var Util = require('./lib/util');
 
 // Local
 var defender, db, stats, emitTop10;
@@ -44,7 +44,7 @@ emitTop10 = function() {
 };
 
 // Initiate the mongo connection
-MongoClient.connect('mongodb://' + (process.env.MONGOHOST || '127.0.0.1') + ':27017/node-defender', function(err, connection) {
+Util.mongoConnect(function(err, connection) {
 	if (err) {
 		tracer.error(err);
 		tracer.warn('Mongo DB connection failed, no game results will be recorded.');
@@ -54,7 +54,7 @@ MongoClient.connect('mongodb://' + (process.env.MONGOHOST || '127.0.0.1') + ':27
 });
 
 // Stat channel (for scoreboard)
-server.listen(parseInt(process.env.STATPORT) || 8080);
+server.listen(parseInt(process.env.PORT) || 8080);
 stats = io
 	.of('/stats')
 	.on('connection', function() {

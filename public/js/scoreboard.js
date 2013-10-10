@@ -1,4 +1,4 @@
-var socket = io.connect('//localhost:1337/stats');
+var socket = io.connect('//localhost:8080/stats');
 socket
 	.on('top10', function (data) {
 		var $toplist;

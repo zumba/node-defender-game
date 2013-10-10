@@ -20,10 +20,11 @@ The configuration of the server is available via environment variables. For exam
 
 or for multiple configurations:
 
-```PORT=4000 STATPORT=80 npm start```
+```PORT=4000 LOGLEVEL=info npm start```
 
-* `PORT` - Socket IO port. (Default: 1337)
-* `STATPORT` - Scoreboard port for the express server. (Default: 8080)
+* `PORT` - Application port. (Default: 8080)
 * `LOGLEVEL` - How verbose should the log be. (Default: info)
 * `DELAY` - How long should the server wait to respond to a player action. (Default: 1000)
 * `MONGOHOST` - Hostname for the mongodb backend (Default: 127.0.0.1)
+* `MONGOPORT` - Port for the mongodb backend (Default: 27017)
+* `MONGODB` - Defender DB (Default: node-defender)
