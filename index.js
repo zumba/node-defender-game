@@ -25,12 +25,16 @@ io.set('logger', {
 	error: tracer.error
 });
 
-// Web server public directory
+// Monitoring
+Util.initializeNodetime();
+
+// Setup Express Server
 app.use(express.static(__dirname + '/public'));
 app.engine('jade', require('jade').__express);
 app.set('views', __dirname + '/templates');
 app.set('view engine', 'jade');
 
+// Express Routes
 app.get('/', function(req, res) {
 	res.render('index', {
 		host: process.env.CLIENT || 'http://localhost:8080'
