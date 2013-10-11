@@ -22,9 +22,10 @@ or for multiple configurations:
 
 ```PORT=4000 LOGLEVEL=info npm start```
 
-* `PORT` - Application port. (Default: 8080)
-* `LOGLEVEL` - How verbose should the log be. (Default: info)
-* `DELAY` - How long should the server wait to respond to a player action. (Default: 1000)
-* `MONGOHOST` - Hostname for the mongodb backend (Default: 127.0.0.1)
-* `MONGOPORT` - Port for the mongodb backend (Default: 27017)
-* `MONGODB` - Defender DB (Default: node-defender)
+* `PORT` - Application port. (Default: `8080`)
+* `CLIENT` - Client host. (default: `http://localhost:8080`)
+* `LOGLEVEL` - How verbose should the log be. (Default: `info`)
+* `DELAY` - How long should the server wait to respond to a player action in milliseconds. (Default: `1000`)
+* `MONGOHOST` - Hostname for the mongodb backend (Default: `127.0.0.1`)
+* `MONGOPORT` - Port for the mongodb backend (Default: `27017`)
+* `MONGODB` - Defender DB (Default: `node-defender`)
