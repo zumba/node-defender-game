@@ -1,0 +1,17 @@
+doctype 5
+html(lang=en)
+	head
+		title Node Defender
+		script
+			var host = '#{host}';
+	body
+		h1 Node Defender Leaderboard
+		#top10
+			p.loading Loading Top 10 list...
+		h2 Current Players
+		#playerList
+			p.loading Loading player list...
+		script(src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js")
+		script(src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js")
+		script(src= host + "/socket.io/socket.io.js")
+		script(src="/js/scoreboard.js")

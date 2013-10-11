@@ -27,6 +27,15 @@ io.set('logger', {
 
 // Web server public directory
 app.use(express.static(__dirname + '/public'));
+app.engine('jade', require('jade').__express);
+app.set('views', __dirname + '/templates');
+app.set('view engine', 'jade');
+
+app.get('/', function(req, res) {
+	res.render('index', {
+		host: process.env.CLIENT || 'http://localhost:8080'
+	});
+});
 
 emitTop10 = function() {
 	// Read top 10 games and emit to stats channel
