@@ -7,6 +7,7 @@ var io = require('socket.io').listen(server);
 var tracer = require('tracer').colorConsole({
 	level: process.env.LOGLEVEL || 'info'
 });
+var _ = require('underscore');
 
 // Libraries
 var PlayerCollection = require('./lib/player_collection');
@@ -85,8 +86,12 @@ players.onCollectionUpdate(function(playerCollection) {
 defender = io
 	.of('/defender')
 	.authorization(function(handshake, callback) {
-		if (typeof handshake.query.username === 'undefined') {
-			return callback('Must define a username in order to connect.', false);
+		if (typeof handshake.query.username === 'undefined' && handshake.query.username.length > 0) {
+			tracer.info('Username required for authorization.');
+			return callback('unauthorized', false);
+		} else if (players.byName(handshake.query.username)) {
+			tracer.info('Username already registered playing a session.');
+			return callback('unauthorized', false);
 		}
 		return callback(null, true);
 	})
@@ -120,7 +125,7 @@ defender = io
 
 		// Welcome message
 		socket.emit('handshake', {
-			'message': 'Welcome ' + player.name() + ', prepare to be attacked!'
+			'message': 'Welcome ' + player.name() + '. prepare to be attacked!'
 		});
 
 		// Recieve action commands from the player
@@ -128,6 +133,7 @@ defender = io
 			var playerAttacks, enemyActions, enemy;
 
 			// Process player action first, then mob action and spawning
+			player.attackMode(data.attack_mode);
 			enemy = game.getEnemyById(data.target);
 			if (enemy){
 				playerAttacks = player.attackEnemy(enemy.enemy, enemy.collection);
