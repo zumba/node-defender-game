@@ -75,7 +75,7 @@ describe('Enemy', function(){
 			});
 			melee.behaviors.push('melee');
 
-			it('prevents an eney from attacking until it reaches the player', function(){
+			it('prevents an enemy from attacking until it reaches the player', function(){
 				melee.position = 5;
 				while(melee.position > 0){
 					expect(melee.canAttack()).toBe(false);
@@ -146,7 +146,18 @@ describe('Enemy', function(){
 			});
 		});
 		describe('evasive', function(){
+			var speedy = new Enemy('speed-demon');
 
+			speedy.behaviors.push('evasive');
+			it('has a chance to dodge some attacks', function(){
+				var i;
+				speedy.hp = 1000;
+
+				for(i = 0; i < 10; i++){
+					speedy.damage(10, 'PowerAttack');
+				}
+				expect(speedy.hp).toBeGreaterThan(900);
+			});
 		});
 		describe('ranged-boost', function(){
 			var ranged = new Enemy('flyer');
