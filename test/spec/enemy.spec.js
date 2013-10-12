@@ -197,7 +197,39 @@ describe('Enemy', function(){
 			});
 		});
 		describe('diminishing', function(){
+			it('reduces incoming damage to either `1` or `20% of max hp`, whichever is greater', function(){
+				var cluster = new Enemy('cluster');
+				cluster.behaviors.push('diminishing');
 
+				cluster.hp = 5;
+				cluster.diminishingDamage = 1;
+				cluster.damage(10, 'PowerAttack');
+				expect(cluster.hp).toBe(4);
+
+				cluster.hp = 100;
+				cluster.diminishingDamage = 20;
+				cluster.damage(10, 'PowerAttack');
+				expect(cluster.hp).toBe(80);
+			});
+
+			it('gets weaker as it is damaged', function(){
+				var damageA, damageB;
+				var cluster = new Enemy('cluster');
+				var player = new Player('Ricky Bobby');
+
+				spyOn(player, 'getDefenseMod').andReturn(1);
+				cluster.behaviors.push('diminishing');
+
+				damageA = cluster.attack(player);
+
+				cluster.damage(10, 'PowerAttack');
+				cluster.damage(10, 'PowerAttack');
+				cluster.damage(10, 'PowerAttack');
+
+				damageB = cluster.attack(player);
+
+				expect(damageB).toBeLessThan(damageA);
+			});
 		});
 		describe('heavy', function(){
 
