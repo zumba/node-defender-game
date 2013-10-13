@@ -29,3 +29,4 @@ or for multiple configurations:
 * `MONGOHOST` - Hostname for the mongodb backend (Default: `127.0.0.1`)
 * `MONGOPORT` - Port for the mongodb backend (Default: `27017`)
 * `MONGODB` - Defender DB (Default: `node-defender`)
+* `CLIENTHASH` - Client game md5 hash generated from `grunt security`. If this value isn't specified, no client check will be performed.
