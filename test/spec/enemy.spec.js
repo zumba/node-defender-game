@@ -232,7 +232,29 @@ describe('Enemy', function(){
 			});
 		});
 		describe('heavy', function(){
+			var heavy = new Enemy('bruiser');
 
+			// force the behavior to be heavy
+			heavy.behaviors.push('heavy');
+
+			it('Takes only 1 damage, no matter what attack mode', function(){
+				heavy.hp = 10;
+
+				heavy.damage(10, 'PowerAttack');
+				expect(heavy.hp).toBe(9);
+
+				heavy.damage(10, 'RapidFire');
+				expect(heavy.hp).toBe(8);
+
+				heavy.damage(10, 'RangedAttack');
+				expect(heavy.hp).toBe(7);
+
+				heavy.damage(10, 'CollateralDamage');
+				expect(heavy.hp).toBe(6);
+
+				heavy.damage(10, 'Defensive');
+				expect(heavy.hp).toBe(5);
+			});
 		});
 	});
 });

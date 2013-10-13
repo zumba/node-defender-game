@@ -20,7 +20,10 @@ describe('Attack Mode', function(){
 			var player = new Player('Dumbledore');
 
 			wave.getAll().forEach(function(enemy){
-				expect(enemy.hp).toBe(enemy.maxHp);
+				// we don't check evasive enemies, because they might have dodged.
+				if (!enemy.is('evasive')){
+					expect(enemy.hp).toBe(enemy.maxHp);
+				}
 			});
 
 			player.attackMode('collateral');
