@@ -7,12 +7,22 @@ describe('Player', function(){
 		expect(player.getDefenseMod()).toEqual(jasmine.any(Number));
 	});
 
-	it('is the health working as desired', function(){
+	it('test if a new user is healthy', function(){
 		var player = new Player('Health Boy');
 		expect(player.isAlive()).toBe(true);
 		expect(player.isDead()).toBe(false);
+	});
 
-		player.damage(10000);
+	it('test if the user dies when take damage of his health', function() {
+		var player = new Player('I gonna die');
+		player.damage(player.health());
+		expect(player.isAlive()).toBe(false);
+		expect(player.isDead()).toBe(true);
+	});
+
+	it('test if the user dies when take damage more than his health', function() {
+		var player = new Player('I gonna die');
+		player.damage(player.health() + 1);
 		expect(player.isAlive()).toBe(false);
 		expect(player.isDead()).toBe(true);
 	});
