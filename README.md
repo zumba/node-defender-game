@@ -10,7 +10,7 @@ Protect your node client for as long as possible. Defend against waves of murder
 
 ## Testing
 
-Run `grunt`.
+Run `npm test`.
 
 ## Configuration
 
