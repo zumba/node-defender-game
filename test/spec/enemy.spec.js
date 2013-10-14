@@ -153,10 +153,10 @@ describe('Enemy', function(){
 				var i;
 				speedy.hp = 1000;
 
-				for(i = 0; i < 10; i++){
+				for(i = 0; i < 20; i++){
 					speedy.damage(10, 'PowerAttack');
 				}
-				expect(speedy.hp).toBeGreaterThan(900);
+				expect(speedy.hp).toBeGreaterThan(800);
 			});
 		});
 		describe('ranged-boost', function(){

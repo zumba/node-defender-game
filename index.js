@@ -142,7 +142,7 @@ defender = io
 			player.attackMode(data.attack_mode);
 			enemy = game.getEnemyById(data.target);
 			if (enemy){
-				playerAttacks = player.attackEnemy(enemy.enemy, enemy.collection);
+				playerAttacks = player.attackEnemy(enemy.enemy, game.waves);
 			}
 
 			enemyActions = game.processEnemyActions(player);
