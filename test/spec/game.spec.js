@@ -7,7 +7,7 @@ describe('Game', function(){
 	it('keeps track of the current round', function(){
 		var round1, round2, game;
 
-		game = new Game();
+		game = new Game(new Player('Robert Paulson'));
 		round1 = game.getRound();
 		game.setupRound();
 		round2 = game.getRound();
@@ -17,7 +17,7 @@ describe('Game', function(){
 		expect(round1 === round2).toBe(false);
 	});
 	it('contains an array of enemy collections called "waves"', function(){
-		var game = new Game();
+		var game = new Game(new Player('Robert Paulson'));
 
 		expect(game.waves).toEqual(jasmine.any(Array));
 		expect(game.waves.length).toBe(0);
@@ -29,8 +29,8 @@ describe('Game', function(){
 	});
 
 	it('can instruct all the enemies to take their turn', function(){
-		var game = new Game();
 		var player = new Player('Robert Paulson');
+		var game = new Game(player);
 		var actions;
 
 

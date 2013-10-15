@@ -103,7 +103,7 @@ defender = io
 	})
 	.on('connection', function(socket) {
 		var player = new Player(socket.handshake.query.username),
-			game = new Game();
+			game = new Game(player);
 		players.add(player);
 
 		// Handle the player's demise
