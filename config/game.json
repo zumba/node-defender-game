@@ -3,5 +3,6 @@
 	"rangeDamageMod" : 0.5,
 	"rangedBoostMod" : 1.6,
 	"evasiveThreshold" : 0.4,
-	"collateralDamage" : 1
+	"collateralDamage" : 1,
+	"insultThreshold": 0.2
 }

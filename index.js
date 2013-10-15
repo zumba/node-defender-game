@@ -14,6 +14,7 @@ var PlayerCollection = require('./lib/player_collection');
 var Player = require('./lib/player');
 var Game = require('./lib/game');
 var Util = require('./lib/util');
+var Insulter = require('./lib/insulter');
 
 // Local
 var defender, db, stats, emitTop10;
@@ -110,7 +111,7 @@ defender = io
 		player.on('death', function(player) {
 			// Notify client of final player stats
 			defender.emit('death', {
-				'message': player.name() + ' is not in my base, killing my dudes anymore.',
+				'message': player.name().toUpperCase() + ' IS NOT IN MY BASE, KILLING MY DUDES ANYMORE.',
 				'stats': _.extend(player.info(), {score: game.calculateScore()})
 			});
 
@@ -153,6 +154,7 @@ defender = io
 			setTimeout(function() {
 				socket.emit('round', {
 					player: player.info(),
+					insult: Insulter.getAny(),
 					round: game.getRound(),
 					attacks : playerAttacks,
 					enemyActions : enemyActions,
@@ -170,6 +172,7 @@ defender = io
 		game.spawnEnemies();
 		socket.emit('round', {
 			player: player.info(),
+			insult: null,
 			round: game.getRound(),
 			attacks : null,
 			enemyActions : null,
