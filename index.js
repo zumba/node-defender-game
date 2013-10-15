@@ -118,7 +118,7 @@ defender = io
 			socket.emit('disconnect', {});
 
 			// Record player stats to DB
-			game.recordGame(db, player, function (err) {
+			game.recordGame(db, function (err) {
 				if (err) {
 					tracer.error(err);
 					tracer.warn('Player stats not saved.');
