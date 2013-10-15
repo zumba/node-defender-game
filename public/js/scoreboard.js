@@ -4,7 +4,7 @@ socket
 		var $toplist;
 		$toplist = $('<ol/>');
 		_.each(data, function(entry) {
-			$toplist.append('<li>' + entry.username + ': ' + entry.round + '</li>');
+			$toplist.append('<li>' + entry.username + ': ' + entry.score + '</li>');
 		});
 		$('#top10')
 			.html('')
