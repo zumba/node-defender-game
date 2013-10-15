@@ -111,7 +111,7 @@ defender = io
 			// Notify client of final player stats
 			defender.emit('death', {
 				'message': player.name() + ' is not in my base, killing my dudes anymore.',
-				'stats': player.info()
+				'stats': _.extend(player.info(), {score: game.calculateScore()})
 			});
 
 			// Kick the client
