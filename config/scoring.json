@@ -1,6 +1,6 @@
 {
-	"round": 100000,
-	"kill": 10000,
-	"damage": 100,
-	"waveCleared": 1000000
+	"round": 1000,
+	"kill": 100,
+	"damage": 1,
+	"waveCleared": 10000
 }
