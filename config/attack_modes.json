@@ -4,34 +4,39 @@
 		"defenseMod" : 1.15,
 		"falloff" : 0.5,
 		"range" : 2,
-		"rate" : 1
+		"rate" : 1,
+		"slug" : "power"
 	},
 	"RapidFire" : {
 		"damage" : [1, 2],
 		"defenseMod" : 1,
 		"falloff" : 0.8,
 		"range" : 3,
-		"rate" : 3
+		"rate" : 3,
+		"slug" : "rapid"
 	},
 	"RangedAttack" : {
 		"damage" : [1, 1],
 		"defenseMod" : 1,
 		"falloff" : 1.5,
 		"range" : 0,
-		"rate" : 1
+		"rate" : 1,
+		"slug" : "ranged"
 	},
 	"CollateralDamage" : {
 		"damage" : [1, 2],
 		"defenseMod" : 1.25,
 		"falloff" : 1,
 		"range" : 5,
-		"rate" : 1
+		"rate" : 1,
+		"slug" : "collateral"
 	},
 	"Defensive" : {
 		"damage" : [1, 2],
 		"defenseMod" : 0.5,
 		"falloff" : 0.2,
 		"range" : 0,
-		"rate" : 1
+		"rate" : 1,
+		"slug" : "defensive"
 	}
 }
