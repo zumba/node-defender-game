@@ -8,6 +8,7 @@ body {
 h1 {
 	font-family: 'Press Start 2P', cursive;
 	font-size: 1.25em;
+	font-size: 2.5vw;
 	color: #666;
 	text-shadow: 0px 1px 0 rgba(0, 0, 0, 0.4);
 	letter-spacing: -.1em;
@@ -36,7 +37,12 @@ ol {
 	-moz-box-shadow: 0 2px 3px 0 rgba(0, 0, 0, .1);
 	-webkit-box-shadow: 0 2px 3px 0 rgba(0, 0, 0, .1);
 	box-shadow: 0 2px 3px 0 rgba(0, 0, 0, .1);
-	background: url(/img/dividers.png) 0 0 repeat;
+	/* new here */
+	/* background: url(/img/dividers.png) 0 0 repeat; */
+	border-left: 1px solid #434343;
+	border-right: 1px solid #434343;
+	width: 50%;
+	margin: 0 auto;
 	
 	li {
 		padding: 8px 8px 0 8px;
@@ -47,19 +53,30 @@ ol {
 		-webkit-box-sizing: border-box;
 		-moz-box-sizing: border-box;
 		box-sizing: border-box;
-		border-left: 1px solid #434343;
-		border-right: 1px solid #434343;
 		width: 500px;
 		margin: 0 auto;
 		font-family: 'Merriweather Sans', sans-serif;
 		/* font-family: 'Open Sans', sans-serif; */
 		/* font-family: 'Press Start 2P', cursive; */
 		font-size: 1.25em;
+		/* new here */
+		/*
+		border-left: 1px solid #434343;
+		border-right: 1px solid #434343;
+		*/
+		border-bottom: 1px solid #434343;
+		width: 100%;
+		height: auto;
+		padding: 8px;
 		
-		span:first-child {
-			width: 50%;
+		span {
+			width: 40%;
 			display: inline-block;
 			margin-left: 2%;
+			
+			&:last-child {
+				margin: 0 2% 0 0;
+			}
 		}
 	}
 }
