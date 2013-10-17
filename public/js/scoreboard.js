@@ -4,7 +4,7 @@ socket
 		var $toplist;
 		$toplist = $('<ol/>');
 		_.each(data, function(entry) {
-			$toplist.append('<li><span>' + entry.username + '</span> <span>' + entry.score + '</span></li>');
+			$toplist.append('<li><span>' + _.escape(entry.username) + '</span> <span>' + entry.score + '</span></li>');
 		});
 		$('#top10')
 			.html('')
@@ -19,7 +19,7 @@ socket
 		var $playerList;
 		$playerList = $('<ul/>');
 		_.each(data, function(player) {
-			$playerList.append('<li>' + player + '</li>');
+			$playerList.append('<li>' + _.escape(player) + '</li>');
 		});
 		$('#playerList')
 			.html('')
