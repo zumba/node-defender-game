@@ -11,6 +11,14 @@
     {
       "name": "Stephen Young",
       "email": "stephen.young@zumba.com"
+    },
+    {
+      "name": "Kaue Ribeiro",
+      "email": "kaue.ribeiro@zumba.com"
+    },
+    {
+      "name": "Juan Basso",
+      "email": "juan.basso@zumba.com"
     }
   ],
   "main": "index.js",
