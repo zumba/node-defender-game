@@ -41,8 +41,8 @@
     "inflection": "~1.2.6",
     "nodetime": "0.8.13"
   },
-  "engine": {
-    "node": ">=0.10.4"
+  "engines": {
+    "node": ">=0.10.4 <0.12"
   },
   "license": "MIT",
   "devDependencies": {
