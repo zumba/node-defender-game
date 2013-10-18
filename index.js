@@ -113,11 +113,17 @@ defender = io
 	})
 	.on('connection', function(socket) {
 		var player = new Player(socket.handshake.query.username),
-			game = new Game(player);
+			game = new Game(player),
+			gameEnded = false,
+			roundResponseTimeout;
 		players.add(player);
 
 		// Handle the player's demise
 		player.on('death', function(player) {
+			// Stop the rounds
+			clearTimeout(roundResponseTimeout);
+			gameEnded = true;
+
 			// Notify client of final player stats
 			defender.emit('death', {
 				'message': player.name().toUpperCase() + ' IS NOT IN MY BASE, KILLING MY DUDES ANYMORE.',
@@ -148,6 +154,10 @@ defender = io
 		socket.on('action', function(data) {
 			var playerAttacks, enemyActions, enemy;
 
+			if (gameEnded) {
+				return;
+			}
+
 			// Process player action first, then mob action and spawning
 			player.attackMode(data.attack_mode);
 			enemy = game.getEnemyById(data.target);
@@ -160,7 +170,7 @@ defender = io
 			game.setupRound();
 
 			// Add a delay to not make the game instant
-			setTimeout(function() {
+			roundResponseTimeout = setTimeout(function() {
 				socket.emit('round', {
 					player: player.info(),
 					insult: Insulter.getAny(),
