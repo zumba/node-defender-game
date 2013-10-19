@@ -102,12 +102,6 @@ defender = io
 		} else if (players.byName(handshake.query.username)) {
 			tracer.info('Username already registered playing a session.');
 			return callback('unauthorized', false);
-		} else if (typeof handshake.query.clientHash === 'undefined') {
-			tracer.info('Client md5 hash required.');
-			return callback('unauthorized', false);
-		} else if (process.env.CLIENTHASH && process.env.CLIENTHASH !== handshake.query.clientHash) {
-			tracer.info('Invalid client md5 hash.');
-			return callback('unauthorized', false);
 		}
 		return callback(null, true);
 	})
