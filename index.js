@@ -39,7 +39,8 @@ app.set('view engine', 'jade');
 // Express Routes
 app.get('/', function(req, res) {
 	res.render('index', {
-		host: process.env.CLIENT || 'http://localhost:8080'
+		host: process.env.CLIENT || 'http://localhost:8080',
+		secure: !!process.env.SECURECLIENT
 	});
 });
 

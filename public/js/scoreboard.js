@@ -1,4 +1,6 @@
-var socket = io.connect(host + '/stats');
+var socket = io.connect(host + '/stats', {
+	secure: secureHost
+});
 socket
 	.on('top10', function (data) {
 		var $toplist;
