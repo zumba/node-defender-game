@@ -120,10 +120,15 @@ defender = io
 			gameEnded = true;
 
 			// Notify client of final player stats
-			defender.emit('death', {
+			socket.emit('death', {
 				'message': player.name().toUpperCase() + ' IS NOT IN MY BASE, KILLING MY DUDES ANYMORE.',
 				'stats': _.extend(player.info(), {score: game.calculateScore()})
 			});
+
+			// Notify channel of player demise
+			socket.broadcast.emit('mandown', {
+				'message': player.name().toUpperCase() + ' IS SWIMMING WITH DA\' FISHES.'
+			})
 
 			// Kick the client
 			socket.emit('disconnect', {});
