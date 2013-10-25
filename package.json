@@ -39,7 +39,8 @@
     "underscore": "1.5.x",
     "tracer": "0.5.x",
     "inflection": "~1.2.6",
-    "nodetime": "0.8.13"
+    "nodetime": "0.8.13",
+    "oauth": "0.9.x"
   },
   "engines": {
     "node": ">=0.10.4 <0.12"

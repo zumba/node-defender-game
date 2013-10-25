@@ -15,6 +15,7 @@ var Player = require('./lib/player');
 var Game = require('./lib/game');
 var Util = require('./lib/util');
 var Insulter = require('./lib/insulter');
+var TwitterOauth = require('./lib/twitter_oauth');
 
 // Local
 var defender, db, stats, emitTop10;
@@ -100,11 +101,23 @@ defender = io
 		} else if (players.byName(handshake.query.username)) {
 			tracer.info('Username already registered playing a session.');
 			return callback('unauthorized', false);
+		} else if (!!db && !!handshake.query.token && !!handshake.query.secret) {
+			handshake.player = new Player(handshake.query.username, handshake.query.token, handshake.query.secret);
+			handshake.player.validateTwitter(db, function(error, isValid) {
+				if (error) {
+					tracer.error(error);
+					callback('unauthorized', false);
+				}
+				callback(isValid ? null : 'unauthorized', isValid);
+			});
+			return;
 		}
+		tracer.info('Authorizing anonymous player.');
+		handshake.player = new Player(handshake.query.username);
 		return callback(null, true);
 	})
 	.on('connection', function(socket) {
-		var player = new Player(socket.handshake.query.username),
+		var player = socket.handshake.player,
 			game = new Game(player),
 			gameEnded = false,
 			roundResponseTimeout;
