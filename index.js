@@ -92,21 +92,29 @@ defender = io
 		if (typeof handshake.query.username === 'undefined' && handshake.query.username.length > 0) {
 			tracer.info('Username required for authorization.');
 			return callback('unauthorized', false);
-		} else if (!/^[\w\-\(\) ]+$/.test(handshake.query.username)) {
+		} 
+		if (!/^[\w\-\(\) ]+$/.test(handshake.query.username)) {
 			tracer.info('Invalid Username: invalid characters.');
 			return callback('unauthorized', false);
-		} else if (handshake.query.username.length > 30) {
+		} 
+		if (handshake.query.username.length > 30) {
 			tracer.info('Invalid Username: too long.');
 			return callback('unauthorized', false);
-		} else if (players.byName(handshake.query.username)) {
+		} 
+		if (players.byName(handshake.query.username)) {
 			tracer.info('Username already registered playing a session.');
 			return callback('unauthorized', false);
-		} else if (!!db && !!handshake.query.token && !!handshake.query.secret) {
+		} 
+		if (!!handshake.query.token && !!handshake.query.secret) {
 			handshake.player = new Player(handshake.query.username, handshake.query.token, handshake.query.secret);
 			handshake.player.validateTwitter(db, function(error, isValid) {
 				if (error) {
 					tracer.error(error);
 					callback('unauthorized', false);
+				}
+				if (players.byName(handshake.player.name())) {
+					tracer.info('Twitter user already registered playing a session.');
+					return callback('unauthorized', false);
 				}
 				callback(isValid ? null : 'unauthorized', isValid);
 			});
