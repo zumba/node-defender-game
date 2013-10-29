@@ -11,6 +11,7 @@
     "eqnull" : true,
     "browser" : true,
     "globals" : {
+        "process": true,
         "_" : true,
         "module" : true,
         "exports" : true,
