@@ -146,7 +146,7 @@ defender = io
 			// Notify channel of player demise
 			socket.broadcast.emit('mandown', {
 				'message': player.name().toUpperCase() + ' IS SWIMMING WITH DA\' FISHES.'
-			})
+			});
 
 			// Kick the client
 			socket.emit('disconnect', {});
@@ -171,10 +171,10 @@ defender = io
 		// Recieve action commands from the player
 		socket.on('action', function(data) {
 			var playerAttacks, enemyActions, enemy;
-
-			if (gameEnded) {
+			if (gameEnded || !game.validateRoundToken(data.roundToken)) {
 				return;
 			}
+			game.consumeRoundToken(data.roundToken);
 
 			// Process player action first, then mob action and spawning
 			player.attackMode(data.attack_mode);
@@ -193,6 +193,7 @@ defender = io
 					player: player.info(),
 					insult: Insulter.getAny(),
 					round: game.getRound(),
+					roundToken: game.getRoundToken(),
 					attacks : playerAttacks,
 					enemyActions : enemyActions,
 					summary: game.summary(),
@@ -211,6 +212,7 @@ defender = io
 			player: player.info(),
 			insult: null,
 			round: game.getRound(),
+			roundToken: game.getRoundToken(),
 			attacks : null,
 			enemyActions : null,
 			summary: game.summary(),
