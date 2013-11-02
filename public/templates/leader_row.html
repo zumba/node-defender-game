@@ -1,0 +1,14 @@
+<div class="leader-row">
+	<div class="place">
+		<span data-icon="&#xe600"></span>
+		<p><%= place %></p>
+	</div>
+	<div class="profile">
+		<% 
+			image = image || 'https://si0.twimg.com/sticky/default_profile_images/default_profile_6_normal.png';
+		%>
+		<img src="<%= image %>"/>
+		<div class="name"><a href="#"><%= username %></a></div>
+	</div>
+	<p class="score"><%= score %></p>
+</div>
