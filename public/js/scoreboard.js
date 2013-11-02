@@ -28,7 +28,6 @@ $(function() {
 			var top10 = $('#top10');
 			top10.find('.leader-row').remove();
 			if (!data) {
-				top10.append('<div class="leader-row"><p>No scores available.</p></div>');
 				return;
 			}
 			_.each(data, function(entry, index) {
