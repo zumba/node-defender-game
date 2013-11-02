@@ -3,6 +3,8 @@ var socket = io.connect(host + '/stats', {
 });
 socket
 	.on('top10', function (data) {
+		// Defunct atm
+		return;
 		var $toplist;
 		$toplist = $('<ol/>');
 		_.each(data, function(entry) {
@@ -13,17 +15,15 @@ socket
 			.append($toplist);
 	})
 	.on('playerRefresh', function(data) {
+		var playerList;
 		if (data.length === 0) {
 			$('#playerList')
 				.html('<p>No players :(</p>');
 			return;
 		}
-		var $playerList;
-		$playerList = $('<ul/>');
-		_.each(data, function(player) {
-			$playerList.append('<li>' + _.escape(player) + '</li>');
-		});
+		playerList = $('<p/>').html(data.join(', '));
+
 		$('#playerList')
 			.html('')
-			.append($playerList);
+			.append(playerList);
 	});
