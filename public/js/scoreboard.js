@@ -39,6 +39,22 @@ $(function() {
 				}));
 			});
 		})
+		// Top categories
+		.on('topCategories', function(data) {
+			var topCategories = $('#top-categories');
+			topCategories.find('.leader-row').remove();
+			if (!data) {
+				return;
+			}
+			_.each(data, function(entry, key) {
+				topCategories.append(renderTemplate('category_leader', {
+					name: _.escape(entry.name),
+					image: entry.image,
+					category: key,
+					category_value: Number(entry.category_value).toLocaleString()
+				}));
+			});
+		})
 		// Current players
 		.on('playerRefresh', function(data) {
 			var playerList;

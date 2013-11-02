@@ -37,6 +37,7 @@
     "express": "3.x",
     "jade": "0.35.x",
     "underscore": "1.5.x",
+    "async": "0.2.x",
     "tracer": "0.5.x",
     "inflection": "~1.2.6",
     "nodetime": "0.8.13",

@@ -18,7 +18,7 @@ var Insulter = require('./lib/insulter');
 var TwitterOauth = require('./lib/twitter_oauth');
 
 // Local
-var defender, db, stats, emitTop10;
+var defender, db, stats, emitTop10, emitTopCategories;
 var players = new PlayerCollection();
 
 io.set('logger', {
@@ -60,6 +60,20 @@ emitTop10 = function() {
 	});
 };
 
+emitTopCategories = function() {
+	Game.topCategoryList(db, function (err, results) {
+		if (err) {
+			tracer.error(err);
+			tracer.warn('topCategories not transmitted.');
+			return;
+		}
+		tracer.info({
+			topCategories: results
+		});
+		stats.emit('topCategories', results);
+	});
+}
+
 // Initiate the mongo connection
 Util.mongoConnect(function(err, connection) {
 	if (err) {
@@ -76,6 +90,7 @@ stats = io
 	.of('/stats')
 	.on('connection', function() {
 		emitTop10();
+		emitTopCategories();
 		// Get the player list and transmit
 		stats.emit('playerRefresh', players.list());
 	});
@@ -160,6 +175,7 @@ defender = io
 				}
 
 				emitTop10();
+				emitTopCategories();
 			});
 		});
 
