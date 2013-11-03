@@ -1,4 +1,8 @@
 /* globals process, __dirname */
+
+// App Monitoring
+require('newrelic');
+
 // Modules
 var express = require('express');
 var app = express();
