@@ -15,14 +15,15 @@ html(lang=en)
 				h2.title Top 10
 				.leader-row
 					p.score Scores not available yet.
-			article#top-categories
-				h2.title Top Categories
-				.leader-row
-					p.score Categories not available yet.
-		article.current-players
-			h2 Current Players
-			#playerList
-				p.loading Loading player list...
+			.right-group
+				article#top-categories
+					h2.title Top Categories
+					.leader-row
+						p.score Categories not available yet.
+				article.current-players
+					h2 Current Players
+					#playerList
+						p.loading Loading player list...
 		script(src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js")
 		script(src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js")
 		script(src= host + "/socket.io/socket.io.js")
