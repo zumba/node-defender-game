@@ -12,6 +12,9 @@ var tracer = require('tracer').colorConsole({
 	level: process.env.LOGLEVEL || 'info'
 });
 var _ = require('underscore');
+var RedisStore = require('socket.io/lib/stores/redis');
+var redis = require('socket.io/node_modules/redis');
+var async = require('async');
 
 // Libraries
 var PlayerCollection = require('./lib/player_collection');
@@ -23,6 +26,7 @@ var TwitterOauth = require('./lib/twitter_oauth');
 
 // Local
 var defender, db, stats, emitTop10, emitTopCategories;
+var redisSocket;
 var players = new PlayerCollection();
 
 io.set('logger', {
@@ -31,6 +35,32 @@ io.set('logger', {
 	warn: tracer.warn,
 	error: tracer.error
 });
+if (process.env.REDIS_HOST && process.env.REDIS_PORT) {
+	redisSocket = {
+		redis: redis,
+		redisPub: redis.createClient(process.env.REDIS_PORT, process.env.REDIS_HOST),
+		redisSub: redis.createClient(process.env.REDIS_PORT, process.env.REDIS_HOST),
+		redisClient: redis.createClient(process.env.REDIS_PORT, process.env.REDIS_HOST)
+	}
+	if (process.env.REDIS_AUTH) {
+		async.map(
+			['redisPub', 'redisSub', 'redisClient'],
+			_.bind(function(redisClient, callback) {
+				redisSocket[redisClient].auth(process.env.REDIS_AUTH, callback);
+			}, redisSocket),
+			function(err) {
+				if (err) {
+					tracer.error('Redis unable to authenticate.');
+				}
+				io.set('store', new RedisStore(redisSocket));
+			}
+		);
+	} else {
+		io.set('store', new RedisStore(redisSocket));
+	}
+} else {
+	tracer.warn('Redis socket.io store not engaged - Using MemoryStore.');
+}
 
 // Monitoring
 Util.initializeNodetime();
