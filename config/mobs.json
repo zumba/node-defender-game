@@ -1,12 +1,12 @@
 {
 	"grunt" : {
-		"behaviors" : [ ["melee", "ranged"] ],
+		"behaviors" : [ ["melee", "ranged"], "squeamish" ],
 		"damage" : [3, 6],
 		"health" : [11, 16],
 		"startPositions" : [2, 3, 4]
 	},
 	"swarmer" : {
-		"behaviors" : [ "ranged" ],
+		"behaviors" : [ "ranged", "squeamish" ],
 		"damage" : [1, 1],
 		"health" : [1, 2],
 		"startPositions" : [2, 3, 4]
@@ -30,7 +30,7 @@
 		"startPositions" : [0, 1]
 	},
 	"cluster" : {
-		"behaviors" : [ "ranged", "diminishing" ],
+		"behaviors" : [ "ranged", "diminishing", "squeamish" ],
 		"damage" : [5, 5],
 		"health" : [5, 10],
 		"startPositions" : [2, 3, 4]
