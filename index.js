@@ -141,19 +141,19 @@ defender = io
 		if (typeof handshake.query.username === 'undefined' && handshake.query.username.length > 0) {
 			tracer.info('Username required for authorization.');
 			return callback('unauthorized', false);
-		} 
+		}
 		if (!/^[\w\-\(\) ]+$/.test(handshake.query.username)) {
 			tracer.info('Invalid Username: invalid characters.');
 			return callback('unauthorized', false);
-		} 
+		}
 		if (handshake.query.username.length > 30) {
 			tracer.info('Invalid Username: too long.');
 			return callback('unauthorized', false);
-		} 
+		}
 		if (players.byName(handshake.query.username)) {
 			tracer.info('Username already registered playing a session.');
 			return callback('unauthorized', false);
-		} 
+		}
 		if (!!handshake.query.token && !!handshake.query.secret) {
 			handshake.player = new Player(handshake.query.username, handshake.query.token, handshake.query.secret);
 			handshake.player.validateTwitter(db, function(error, isValid) {
@@ -228,7 +228,7 @@ defender = io
 
 			// Process player action first, then mob action and spawning
 			player.attackMode(data.attack_mode);
-			enemy = game.getEnemyById(data.target);
+			enemy = game.getEnemyById(data.target) || game.getRandomEnemy();
 			if (enemy){
 				playerAttacks = player.attackEnemy(enemy.enemy, game.waves);
 			}
