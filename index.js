@@ -25,8 +25,7 @@ var Insulter = require('./lib/insulter');
 var TwitterOauth = require('./lib/twitter_oauth');
 
 // Local
-var defender, db, stats, emitTop10, emitTopCategories;
-var redisSocket;
+var defender, db, stats, emitTop10, emitTopCategories, redisSocket;
 var players = new PlayerCollection();
 
 io.set('logger', {
@@ -50,7 +49,8 @@ if (process.env.REDIS_HOST && process.env.REDIS_PORT) {
 			}, redisSocket),
 			function(err) {
 				if (err) {
-					tracer.error('Redis unable to authenticate.');
+					tracer.error('Redis unable to authenticate. Falling back to MemoryStore.');
+					return;
 				}
 				io.set('store', new RedisStore(redisSocket));
 			}
