@@ -22,7 +22,6 @@ var Player = require('./lib/player');
 var Game = require('./lib/game');
 var Util = require('./lib/util');
 var Insulter = require('./lib/insulter');
-var TwitterOauth = require('./lib/twitter_oauth');
 
 // Local
 var defender, db, stats, emitTop10, emitTopCategories, redisSocket;
@@ -154,19 +153,35 @@ defender = io
 			tracer.info('Username already registered playing a session.');
 			return callback('unauthorized', false);
 		}
-		if (!!handshake.query.token && !!handshake.query.secret) {
+		if (!!handshake.query.token && !!handshake.query.type) {
 			handshake.player = new Player(handshake.query.username, handshake.query.token, handshake.query.secret);
-			handshake.player.validateTwitter(db, function(error, isValid) {
-				if (error) {
-					tracer.error(error);
-					callback('unauthorized', false);
-				}
-				if (players.byName(handshake.player.name())) {
-					tracer.info('Twitter user already registered playing a session.');
-					return callback('unauthorized', false);
-				}
-				callback(isValid ? null : 'unauthorized', isValid);
-			});
+			switch (handshake.query.type) {
+				case 'twitter':
+					handshake.player.validateTwitter(db, function(error, isValid) {
+						if (error) {
+							tracer.error(error);
+							callback('unauthorized', false);
+						}
+						if (players.byName(handshake.player.name())) {
+							tracer.info('Twitter user already registered playing a session.');
+							return callback('unauthorized', false);
+						}
+						callback(isValid ? null : 'unauthorized', isValid);
+					});
+					break;
+				case 'github':
+					handshake.player.validateGithub(db, function(error, isValid) {
+						if (error) {
+							tracer.error(error);
+							return callback('unauthorized', false);
+						}
+						if (players.byName(handshake.player.name())) {
+							tracer.info('Github user already registered playing a session.');
+							return callback('unauthorized', false);
+						}
+						callback(isValid ? null : 'unauthorized', isValid);
+					});
+			}
 			return;
 		}
 		tracer.info('Authorizing anonymous player.');
