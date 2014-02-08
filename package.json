@@ -1,5 +1,5 @@
 {
-  "name": "booth-node-defender-server",
+  "name": "node-defender-game",
   "version": "0.0.1",
   "author": "Zumba Fitness <engineering@zumba.com>",
   "description": "Protect your node client for as long as possible. Defend against waves of murderous server side code that wants nothing more than to kill and disconnect your node client.",
@@ -30,7 +30,6 @@
     "type": "git",
     "url": "https://github.com/zumba/booth-node-defender-server.git"
   },
-  "private": true,
   "dependencies": {
     "socket.io": "0.9.x",
     "mongodb": "1.3.x",
@@ -42,7 +41,8 @@
     "inflection": "~1.2.6",
     "nodetime": "0.8.13",
     "oauth": "0.9.x",
-    "newrelic": "1.0.x"
+    "github": "0.1.*",
+    "newrelic": "1.2.x"
   },
   "engines": {
     "node": ">=0.10.4 <0.12"
